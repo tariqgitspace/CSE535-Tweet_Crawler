@@ -1,0 +1,71 @@
+Submit Project1:
+
+login to sol.cse.buffalo.edu using ssh
+username: tariqsid
+pwd:      0505404212
+
+sol.cse.buffalo.edu
+
+
+create a textfile project1.txt
+submit_cse535 project1.txt
+manage-schema
+
+1> change fiels type to text_ko and ...
+  <field name="text_en" type="text_en" indexed="true" stored="true"/>
+  <field name="text_es" type="text_es" indexed="true" stored="true"/>
+  <field name="text_ko" type="text_ko" indexed="true" stored="true"/>
+  <field name="text_tr" type="text_tr" indexed="true" stored="true"/>
+  
+2> add lines for KO
+  <fieldType name="text_ko" class="solr.TextField" positionIncrementGap="100">
+    <analyzer>
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_ko.txt" ignoreCase="true"/>
+    </analyzer>
+  </fieldType>
+
+
+3>Add stop words files for Korean
+4> Delete tweet_loc field(which was inserted from Java Code) and then add again using add copy field but with type as location
+  <field name="tweet_loc" type="location" indexed="true" stored="true"/>
+  
+5> Other Fieds:
+ <field name="tweet_date" type="tdates"/>
+  <field name="tweet_emoticons" type="strings"/>
+  <field name="tweet_lang" type="strings"/>
+  
+6> Other fields created using copy Command
+   <field name="mentions" type="strings" indexed="true" stored="true"/>
+   <copyField source="entities.user_mentions.screen_name" dest="mentions"/>
+
+   <field name="tweet_urls" type="strings" indexed="true" stored="true"/
+   <copyField source="entities.urls.url" dest="tweet_urls"/>
+   
+   <field name="hashtags" type="strings" indexed="true" stored="true"/>
+   <copyField source="entities.hashtags.text" dest="hashtags"/>
+   
+7>   tweet_text is copy of text field
+
+  <field name="tweet_text" type="strings" indexed="true" stored="true"/>
+   <copyField source="text" dest="tweet_text"/>
+  
+
+
+
+solarconfig.xml :
+Requirement:  tweet_text : Default field .  One copy of the tweet text that retains all content (see below) irrespective of the
+language. This field should be set as the default field while searching.
+
+
+uncomment df line and replace text with tweet_text
+
+<requestHandler name="/select" class="solr.SearchHandler">
+    <!-- default values for query parameters can be specified, these
+         will be overridden by parameters in the request
+      -->
+    <lst name="defaults">
+      <str name="echoParams">explicit</str>
+      <int name="rows">10</int>
+      <!-- <str name="df">text</str> -->
