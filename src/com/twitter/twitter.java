@@ -18,10 +18,10 @@ public static void main(String[] args) throws TwitterException, IOException, Int
 	ConfigurationBuilder cb = new ConfigurationBuilder();
     
     cb.setDebugEnabled(true)
-    	.setOAuthConsumerKey("P0KFHkttMtsVTzK8t2i9JEjEx")
-    	.setOAuthConsumerSecret("WdG7dZt0GFEDmP3aB2n2tOkqI9xgIyxhymVkFW88nqvHVXgIHW")
-    	.setOAuthAccessToken("773251985818648576-LfKscn0jypi2y6lwtYzh9KJHpHQ6Uko")
-    	.setOAuthAccessTokenSecret("d3tP0779kFu7CEXcpo73ZK74JkadvCqqq1J5LkghrspqJ");
+    	.setOAuthConsumerKey("")
+    	.setOAuthConsumerSecret("")
+    	.setOAuthAccessToken("-")
+    	.setOAuthAccessTokenSecret("");
 
     cb.setJSONStoreEnabled(true);
     Twitter twitter = new TwitterFactory(cb.build()).getInstance();
